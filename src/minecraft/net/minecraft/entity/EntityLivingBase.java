@@ -1566,6 +1566,7 @@ public abstract class EntityLivingBase extends Entity
      */
     protected void jump()
     {
+    	
         this.motionY = (double)this.getJumpUpwardsMotion();
 
         if (this.isPotionActive(Potion.jump))
@@ -1581,6 +1582,7 @@ public abstract class EntityLivingBase extends Entity
         }
 
         this.isAirBorne = true;
+    	
     }
 
     /**
@@ -1596,6 +1598,167 @@ public abstract class EntityLivingBase extends Entity
         this.motionY += 0.03999999910593033D;
     }
 
+    /**
+     * sanity loss. Make it so it wont change based on where you're looking
+     * how? what? where did I reverse the forward and strafe??? I mean it works but it doesnt make sense????
+     * fun fact.
+     * this isnt needed.
+     * the motionX, motionZ is fucking me.
+     * I want to strangle someone.
+     */
+    public void fucker9000(float forward, float strafe)
+    {
+        if (this.isServerWorld())
+        {
+            if (!this.isInWater() || this instanceof EntityPlayer && ((EntityPlayer)this).capabilities.isFlying)
+            {
+                if (!this.isInLava() || this instanceof EntityPlayer && ((EntityPlayer)this).capabilities.isFlying)
+                {
+                    float f4 = 0.91F;
+
+                    if (this.onGround)
+                    {
+                        f4 = this.worldObj.getBlockState(new BlockPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.getEntityBoundingBox().minY) - 1, MathHelper.floor_double(this.posZ))).getBlock().slipperiness * 0.91F;
+                    }
+
+                    float f = 0.16277136F / (f4 * f4 * f4);
+                    float f5;
+
+                    if (this.onGround)
+                    {
+                        f5 = this.getAIMoveSpeed() * f;
+                    }
+                    else
+                    {
+                        f5 = this.jumpMovementFactor;
+                    }
+
+                    this.moveFlying(strafe, forward, f5);
+                    f4 = 0.91F;
+
+                    if (this.onGround)
+                    {
+                        f4 = this.worldObj.getBlockState(new BlockPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.getEntityBoundingBox().minY) - 1, MathHelper.floor_double(this.posZ))).getBlock().slipperiness * 0.91F;
+                    }
+
+                    if (this.isOnLadder())
+                    {
+                        float f6 = 0.15F;
+                        this.motionX = MathHelper.clamp_double(this.motionX, (double)(-f6), (double)f6);
+                        this.motionZ = MathHelper.clamp_double(this.motionZ, (double)(-f6), (double)f6);
+                        this.fallDistance = 0.0F;
+
+                        if (this.motionY < -0.15D)
+                        {
+                            this.motionY = -0.15D;
+                        }
+
+                        boolean flag = this.isSneaking() && this instanceof EntityPlayer;
+
+                        if (flag && this.motionY < 0.0D)
+                        {
+                            this.motionY = 0.0D;
+                        }
+                    }
+
+                    this.moveEntity(this.motionX, this.motionY, this.motionZ);
+
+                    if (this.isCollidedHorizontally && this.isOnLadder())
+                    {
+                        this.motionY = 0.2D;
+                    }
+
+                    if (this.worldObj.isRemote && (!this.worldObj.isBlockLoaded(new BlockPos((int)this.posX, 0, (int)this.posZ)) || !this.worldObj.getChunkFromBlockCoords(new BlockPos((int)this.posX, 0, (int)this.posZ)).isLoaded()))
+                    {
+                        if (this.posY > 0.0D)
+                        {
+                            this.motionY = -0.1D;
+                        }
+                        else
+                        {
+                            this.motionY = 0.0D;
+                        }
+                    }
+                    else
+                    {
+                        this.motionY -= 0.08D;
+                    }
+
+                    this.motionY *= 0.9800000190734863D;
+                    this.motionX *= (double)f4;
+                    this.motionZ *= (double)f4;
+                }
+                else
+                {
+                    double d1 = this.posY;
+                    this.moveFlying(strafe, forward, 0.02F);
+                    this.moveEntity(this.motionX, this.motionY, this.motionZ);
+                    this.motionX *= 0.5D;
+                    this.motionY *= 0.5D;
+                    this.motionZ *= 0.5D;
+                    this.motionY -= 0.02D;
+
+                    if (this.isCollidedHorizontally && this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6000000238418579D - this.posY + d1, this.motionZ))
+                    {
+                        this.motionY = 0.30000001192092896D;
+                    }
+                }
+            }
+            else
+            {
+                double d0 = this.posY;
+                float f1 = 0.8F;
+                float f2 = 0.02F;
+                float f3 = (float)EnchantmentHelper.getDepthStriderModifier(this);
+
+                if (f3 > 3.0F)
+                {
+                    f3 = 3.0F;
+                }
+
+                if (!this.onGround)
+                {
+                    f3 *= 0.5F;
+                }
+
+                if (f3 > 0.0F)
+                {
+                    f1 += (0.54600006F - f1) * f3 / 3.0F;
+                    f2 += (this.getAIMoveSpeed() * 1.0F - f2) * f3 / 3.0F;
+                }
+
+                this.moveFlying(strafe, forward, f2);
+                this.moveEntity(this.motionX, this.motionY, this.motionZ);
+                this.motionX *= (double)f1;
+                this.motionY *= 0.800000011920929D;
+                this.motionZ *= (double)f1;
+                this.motionY -= 0.02D;
+
+                if (this.isCollidedHorizontally && this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6000000238418579D - this.posY + d0, this.motionZ))
+                {
+                    this.motionY = 0.30000001192092896D;
+                }
+            }
+        }
+		//why? why do you need limbswing?? what the honest fuck do you need the limbswing in movement?????
+//        okay so it might be because you swing the arms when moving
+//        why are you changing it here though???????
+        this.prevLimbSwingAmount = this.limbSwingAmount;
+        double d2 = this.posX - this.prevPosX;
+        double d3 = this.posZ - this.prevPosZ;
+        float f7 = MathHelper.sqrt_double(d2 * d2 + d3 * d3) * 4.0F;
+
+        if (f7 > 1.0F)
+        {
+            f7 = 1.0F;
+        }
+
+        this.limbSwingAmount += (f7 - this.limbSwingAmount) * 0.4F;
+        this.limbSwing += this.limbSwingAmount;
+    }
+
+    
+    
     /**
      * Moves the entity based on the specified heading.  Args: strafe, forward
      */
@@ -1945,6 +2108,110 @@ public abstract class EntityLivingBase extends Entity
      * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
      * use this to react to sunlight and start to burn.
      */
+    public void onLivingUpdate(boolean FLAGFUCKOFF)
+    {
+        if (this.jumpTicks > 0)
+        {
+            --this.jumpTicks;
+        }
+
+        if (this.newPosRotationIncrements > 0)
+        {
+            double d0 = this.posX + (this.newPosX - this.posX) / (double)this.newPosRotationIncrements;
+            double d1 = this.posY + (this.newPosY - this.posY) / (double)this.newPosRotationIncrements;
+            double d2 = this.posZ + (this.newPosZ - this.posZ) / (double)this.newPosRotationIncrements;
+            double d3 = MathHelper.wrapAngleTo180_double(this.newRotationYaw - (double)this.rotationYaw);
+            this.rotationYaw = (float)((double)this.rotationYaw + d3 / (double)this.newPosRotationIncrements);
+            this.rotationPitch = (float)((double)this.rotationPitch + (this.newRotationPitch - (double)this.rotationPitch) / (double)this.newPosRotationIncrements);
+            --this.newPosRotationIncrements;
+            this.setPosition(d0, d1, d2);
+            this.setRotation(this.rotationYaw, this.rotationPitch);
+        }
+        else if (!this.isServerWorld())
+        {
+            this.motionX *= 0.98D;
+            this.motionY *= 0.98D;
+            this.motionZ *= 0.98D;
+        }
+
+        if (Math.abs(this.motionX) < 0.005D)
+        {
+            this.motionX = 0.0D;
+        }
+
+        if (Math.abs(this.motionY) < 0.005D)
+        {
+            this.motionY = 0.0D;
+        }
+
+        if (Math.abs(this.motionZ) < 0.005D)
+        {
+            this.motionZ = 0.0D;
+        }
+
+        this.worldObj.theProfiler.startSection("ai");
+
+        if (this.isMovementBlocked())
+        {
+            this.isJumping = false;
+            this.moveStrafing = 0.0F;
+            this.moveForward = 0.0F;
+            this.randomYawVelocity = 0.0F;
+        }
+        else if (this.isServerWorld())
+        {
+            this.worldObj.theProfiler.startSection("newAi");
+            this.updateEntityActionState();
+            this.worldObj.theProfiler.endSection();
+        }
+
+        this.worldObj.theProfiler.endSection();
+        this.worldObj.theProfiler.startSection("jump");
+
+        if (this.isJumping)
+        {
+            if (this.isInWater())
+            {
+                this.updateAITick();
+            }
+            else if (this.isInLava())
+            {
+                this.handleJumpLava();
+            }
+            else if (this.onGround && this.jumpTicks == 0)
+            {
+            	
+                this.jump();
+                this.jumpTicks = 10;
+            }
+        }
+        else
+        {
+            this.jumpTicks = 0;
+        }
+
+        this.worldObj.theProfiler.endSection();
+        this.worldObj.theProfiler.startSection("travel");
+        this.moveStrafing *= 0.98F;
+        this.moveForward *= 0.98F;
+        this.randomYawVelocity *= 0.9F;
+        if(!FLAGFUCKOFF)
+        	this.moveEntityWithHeading(this.moveStrafing, this.moveForward);
+        else
+//        	I hate myself I hate myself I hate myself 
+//        	time to heave a <br> down
+        	this.fucker9000(this.moveForward, this.moveStrafing);
+        this.worldObj.theProfiler.endSection();
+        this.worldObj.theProfiler.startSection("push");
+
+        if (!this.worldObj.isRemote)
+        {
+            this.collideWithNearbyEntities();
+        }
+
+        this.worldObj.theProfiler.endSection();
+    }
+
     public void onLivingUpdate()
     {
         if (this.jumpTicks > 0)
@@ -2017,6 +2284,7 @@ public abstract class EntityLivingBase extends Entity
             }
             else if (this.onGround && this.jumpTicks == 0)
             {
+            	
                 this.jump();
                 this.jumpTicks = 10;
             }

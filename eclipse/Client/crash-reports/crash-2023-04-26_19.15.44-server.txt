@@ -1,0 +1,91 @@
+---- Minecraft Crash Report ----
+// There are four lights!
+
+Time: 4/26/23, 7:15 PM
+Description: Exception ticking world
+
+java.lang.Error: Unresolved compilation problems: 
+	Incompatible operand types Block and BlockStaticLiquid
+	Incompatible operand types Block and BlockDynamicLiquid
+	Incompatible operand types Block and BlockDynamicLiquid
+	Incompatible operand types Block and BlockStaticLiquid
+
+	at net.minecraft.world.gen.feature.WorldGenSwamp.generate(WorldGenSwamp.java:65)
+	at net.minecraft.world.biome.BiomeDecorator.genDecorations(BiomeDecorator.java:220)
+	at net.minecraft.world.biome.BiomeDecorator.decorate(BiomeDecorator.java:174)
+	at net.minecraft.world.biome.BiomeGenBase.decorate(BiomeGenBase.java:422)
+	at net.minecraft.world.gen.ChunkProviderGenerate.populate(ChunkProviderGenerate.java:461)
+	at net.minecraft.world.gen.ChunkProviderServer.populate(ChunkProviderServer.java:237)
+	at net.minecraft.world.chunk.Chunk.populateChunk(Chunk.java:1163)
+	at net.minecraft.world.gen.ChunkProviderServer.loadChunk(ChunkProviderServer.java:141)
+	at net.minecraft.world.gen.ChunkProviderServer.provideChunk(ChunkProviderServer.java:154)
+	at net.minecraft.world.World.getChunkFromChunkCoords(World.java:337)
+	at net.minecraft.world.World.getChunkFromBlockCoords(World.java:329)
+	at net.minecraft.world.World.getBlockState(World.java:858)
+	at net.minecraft.block.BlockGrass.updateTick(BlockGrass.java:71)
+	at net.minecraft.block.Block.randomTick(Block.java:530)
+	at net.minecraft.world.WorldServer.updateBlocks(WorldServer.java:426)
+	at net.minecraft.world.WorldServer.tick(WorldServer.java:214)
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:770)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:691)
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:178)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:570)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at net.minecraft.world.gen.feature.WorldGenSwamp.generate(WorldGenSwamp.java:65)
+	at net.minecraft.world.biome.BiomeDecorator.genDecorations(BiomeDecorator.java:220)
+	at net.minecraft.world.biome.BiomeDecorator.decorate(BiomeDecorator.java:174)
+	at net.minecraft.world.biome.BiomeGenBase.decorate(BiomeGenBase.java:422)
+	at net.minecraft.world.gen.ChunkProviderGenerate.populate(ChunkProviderGenerate.java:461)
+	at net.minecraft.world.gen.ChunkProviderServer.populate(ChunkProviderServer.java:237)
+	at net.minecraft.world.chunk.Chunk.populateChunk(Chunk.java:1163)
+	at net.minecraft.world.gen.ChunkProviderServer.loadChunk(ChunkProviderServer.java:141)
+	at net.minecraft.world.gen.ChunkProviderServer.provideChunk(ChunkProviderServer.java:154)
+	at net.minecraft.world.World.getChunkFromChunkCoords(World.java:337)
+	at net.minecraft.world.World.getChunkFromBlockCoords(World.java:329)
+	at net.minecraft.world.World.getBlockState(World.java:858)
+	at net.minecraft.block.BlockGrass.updateTick(BlockGrass.java:71)
+	at net.minecraft.block.Block.randomTick(Block.java:530)
+	at net.minecraft.world.WorldServer.updateBlocks(WorldServer.java:426)
+	at net.minecraft.world.WorldServer.tick(WorldServer.java:214)
+
+-- Affected level --
+Details:
+	Level name: Demo_World
+	All players: 1 total; [EntityPlayerMP['Player93'/148, l='Demo_World', x=-76.35, y=70.73, z=-80.71]]
+	Chunk stats: ServerChunkCache: 755 Drop: 0
+	Level seed: -343522682
+	Level generator: ID 00 - default, ver 1. Features enabled: true
+	Level generator options: 
+	Level spawn location: -20.00,64.00,-60.00 - World: (-20,64,-60), Chunk: (at 12,4,4 in -2,-4; contains blocks -32,0,-64 to -17,255,-49), Region: (-1,-1; contains chunks -32,-32 to -1,-1, blocks -512,0,-512 to -1,255,-1)
+	Level time: 1701 game time, 1701 day time
+	Level dimension: 0
+	Level storage version: 0x04ABD - Anvil
+	Level weather: Rain time: 168295 (now: false), thunder time: 163113 (now: false)
+	Level game mode: Game mode: survival (ID 0). Hardcore: false. Cheats: false
+Stacktrace:
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:770)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:691)
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:178)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:570)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.9
+	Operating System: Windows 10 (amd64) version 10.0
+	Java Version: 17.0.4.1, Eclipse Adoptium
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Eclipse Adoptium
+	Memory: 224602664 bytes (214 MB) / 469762048 bytes (448 MB) up to 4265607168 bytes (4068 MB)
+	JVM Flags: 1 total; -XX:+ShowCodeDetailsInExceptionMessages
+	IntCache: cache: 0, tcache: 0, allocated: 13, tallocated: 95
+	Profiler Position: N/A (disabled)
+	Player Count: 1 / 8; [EntityPlayerMP['Player93'/148, l='Demo_World', x=-76.35, y=70.73, z=-80.71]]
+	Type: Integrated Server (map_client.txt)
+	Is Modded: Very likely; Jar signature invalidated

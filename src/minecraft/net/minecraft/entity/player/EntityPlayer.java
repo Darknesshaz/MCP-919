@@ -616,7 +616,99 @@ public abstract class EntityPlayer extends EntityLivingBase
 
         this.inventory.decrementAnimations();
         this.prevCameraYaw = this.cameraYaw;
+//        if()
         super.onLivingUpdate();
+        IAttributeInstance iattributeinstance = this.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
+
+        if (!this.worldObj.isRemote)
+        {
+            iattributeinstance.setBaseValue((double)this.capabilities.getWalkSpeed());
+        }
+
+        this.jumpMovementFactor = this.speedInAir;
+
+        if (this.isSprinting())
+        {
+            this.jumpMovementFactor = (float)((double)this.jumpMovementFactor + (double)this.speedInAir * 0.3D);
+        }
+
+        this.setAIMoveSpeed((float)iattributeinstance.getAttributeValue());
+        float f = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
+        float f1 = (float)(Math.atan(-this.motionY * 0.20000000298023224D) * 15.0D);
+
+        if (f > 0.1F)
+        {
+            f = 0.1F;
+        }
+
+        if (!this.onGround || this.getHealth() <= 0.0F)
+        {
+            f = 0.0F;
+        }
+
+        if (this.onGround || this.getHealth() <= 0.0F)
+        {
+            f1 = 0.0F;
+        }
+
+        this.cameraYaw += (f - this.cameraYaw) * 0.4F;
+        this.cameraPitch += (f1 - this.cameraPitch) * 0.8F;
+
+        if (this.getHealth() > 0.0F && !this.isSpectator())
+        {
+            AxisAlignedBB axisalignedbb = null;
+
+            if (this.ridingEntity != null && !this.ridingEntity.isDead)
+            {
+                axisalignedbb = this.getEntityBoundingBox().union(this.ridingEntity.getEntityBoundingBox()).expand(1.0D, 0.0D, 1.0D);
+            }
+            else
+            {
+                axisalignedbb = this.getEntityBoundingBox().expand(1.0D, 0.5D, 1.0D);
+            }
+
+            List<Entity> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, axisalignedbb);
+
+            for (int i = 0; i < list.size(); ++i)
+            {
+                Entity entity = (Entity)list.get(i);
+
+                if (!entity.isDead)
+                {
+                    this.collideWithPlayer(entity);
+                }
+            }
+        }
+    }
+
+    /**
+     * do you ever want to feel insane? try implementing your own movement system into a system that already fucking works like what the honest fuck.
+     * also it just calls a different super.onlivingupdate()
+     */
+    public void IfeltLikenotNamingThisProperly()
+    {
+        if (this.flyToggleTimer > 0)
+        {
+            --this.flyToggleTimer;
+        }
+
+        if (this.worldObj.getDifficulty() == EnumDifficulty.PEACEFUL && this.worldObj.getGameRules().getBoolean("naturalRegeneration"))
+        {
+            if (this.getHealth() < this.getMaxHealth() && this.ticksExisted % 20 == 0)
+            {
+                this.heal(1.0F);
+            }
+
+            if (this.foodStats.needFood() && this.ticksExisted % 10 == 0)
+            {
+                this.foodStats.setFoodLevel(this.foodStats.getFoodLevel() + 1);
+            }
+        }
+
+        this.inventory.decrementAnimations();
+        this.prevCameraYaw = this.cameraYaw;
+//        if()
+        onLivingUpdate(true);
         IAttributeInstance iattributeinstance = this.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
 
         if (!this.worldObj.isRemote)

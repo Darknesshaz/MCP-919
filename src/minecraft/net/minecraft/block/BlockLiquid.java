@@ -204,7 +204,7 @@ public abstract class BlockLiquid extends Block
      */
     public int tickRate(World worldIn)
     {
-        return this.blockMaterial == Material.water ? 5 : (this.blockMaterial == Material.lava ? (worldIn.provider.getHasNoSky() ? 10 : 30) : 0);
+        return this.blockMaterial == Material.water ? 5 : (this.blockMaterial == Material.lava ? (worldIn.provider.getHasNoSky() ? 10 : 30) : 5);
     }
 
     public int getMixedBrightnessForBlock(IBlockAccess worldIn, BlockPos pos)

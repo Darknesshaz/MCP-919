@@ -10,6 +10,9 @@ public class MouseHelper
 
     /** Mouse delta Y this frame */
     public int deltaY;
+    public int ultX;
+    public int ultY;
+
 
     /**
      * Grabs the mouse cursor it doesn't move and isn't seen.
@@ -35,4 +38,12 @@ public class MouseHelper
         this.deltaX = Mouse.getDX();
         this.deltaY = Mouse.getDY();
     }
+    
+    public void mouseXY()
+    {
+    	ultX = Mouse.getX();
+    	ultY = Mouse.getY();	
+    }
+    
+    
 }

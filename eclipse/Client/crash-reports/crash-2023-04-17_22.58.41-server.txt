@@ -1,0 +1,109 @@
+---- Minecraft Crash Report ----
+// Hey, that tickles! Hehehe!
+
+Time: 4/17/23, 10:58 PM
+Description: Ticking entity
+
+java.lang.Error: Unresolved compilation problems: 
+	Incompatible operand types Block and BlockDynamicLiquid
+	Incompatible operand types Block and BlockStaticLiquid
+
+	at net.minecraft.world.pathfinder.WalkNodeProcessor.getPathPointTo(WalkNodeProcessor.java:54)
+	at net.minecraft.pathfinding.PathFinder.createEntityPathTo(PathFinder.java:45)
+	at net.minecraft.pathfinding.PathFinder.createEntityPathTo(PathFinder.java:35)
+	at net.minecraft.pathfinding.PathNavigate.getPathToPos(PathNavigate.java:94)
+	at net.minecraft.pathfinding.PathNavigate.getPathToXYZ(PathNavigate.java:75)
+	at net.minecraft.pathfinding.PathNavigate.tryMoveToXYZ(PathNavigate.java:105)
+	at net.minecraft.entity.ai.EntityAIWander.startExecuting(EntityAIWander.java:76)
+	at net.minecraft.entity.ai.EntityAITasks.onUpdateTasks(EntityAITasks.java:97)
+	at net.minecraft.entity.EntityLiving.updateEntityActionState(EntityLiving.java:632)
+	at net.minecraft.entity.EntityLivingBase.onLivingUpdate(EntityLivingBase.java:2001)
+	at net.minecraft.entity.EntityLiving.onLivingUpdate(EntityLiving.java:457)
+	at net.minecraft.entity.EntityAgeable.onLivingUpdate(EntityAgeable.java:172)
+	at net.minecraft.entity.passive.EntityAnimal.onLivingUpdate(EntityAnimal.java:43)
+	at net.minecraft.entity.EntityLivingBase.onUpdate(EntityLivingBase.java:1836)
+	at net.minecraft.entity.EntityLiving.onUpdate(EntityLiving.java:280)
+	at net.minecraft.world.World.updateEntityWithOptionalForce(World.java:1880)
+	at net.minecraft.world.WorldServer.updateEntityWithOptionalForce(WorldServer.java:702)
+	at net.minecraft.world.World.updateEntity(World.java:1849)
+	at net.minecraft.world.World.updateEntities(World.java:1701)
+	at net.minecraft.world.WorldServer.updateEntities(WorldServer.java:540)
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:781)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:691)
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:178)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:570)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at net.minecraft.world.pathfinder.WalkNodeProcessor.getPathPointTo(WalkNodeProcessor.java:54)
+	at net.minecraft.pathfinding.PathFinder.createEntityPathTo(PathFinder.java:45)
+	at net.minecraft.pathfinding.PathFinder.createEntityPathTo(PathFinder.java:35)
+	at net.minecraft.pathfinding.PathNavigate.getPathToPos(PathNavigate.java:94)
+	at net.minecraft.pathfinding.PathNavigate.getPathToXYZ(PathNavigate.java:75)
+	at net.minecraft.pathfinding.PathNavigate.tryMoveToXYZ(PathNavigate.java:105)
+	at net.minecraft.entity.ai.EntityAIWander.startExecuting(EntityAIWander.java:76)
+	at net.minecraft.entity.ai.EntityAITasks.onUpdateTasks(EntityAITasks.java:97)
+	at net.minecraft.entity.EntityLiving.updateEntityActionState(EntityLiving.java:632)
+	at net.minecraft.entity.EntityLivingBase.onLivingUpdate(EntityLivingBase.java:2001)
+	at net.minecraft.entity.EntityLiving.onLivingUpdate(EntityLiving.java:457)
+	at net.minecraft.entity.EntityAgeable.onLivingUpdate(EntityAgeable.java:172)
+	at net.minecraft.entity.passive.EntityAnimal.onLivingUpdate(EntityAnimal.java:43)
+	at net.minecraft.entity.EntityLivingBase.onUpdate(EntityLivingBase.java:1836)
+	at net.minecraft.entity.EntityLiving.onUpdate(EntityLiving.java:280)
+	at net.minecraft.world.World.updateEntityWithOptionalForce(World.java:1880)
+	at net.minecraft.world.WorldServer.updateEntityWithOptionalForce(WorldServer.java:702)
+	at net.minecraft.world.World.updateEntity(World.java:1849)
+
+-- Entity being ticked --
+Details:
+	Entity Type: Pig (net.minecraft.entity.passive.EntityPig)
+	Entity ID: 16
+	Entity Name: Pig
+	Entity's Exact location: -1090.96, 4.00, 562.20
+	Entity's Block location: -1091.00,4.00,562.00 - World: (-1091,4,562), Chunk: (at 13,0,2 in -69,35; contains blocks -1104,0,560 to -1089,255,575), Region: (-3,1; contains chunks -96,32 to -65,63, blocks -1536,0,512 to -1025,255,1023)
+	Entity's Momentum: 0.00, -0.08, 0.00
+	Entity's Rider: ~~ERROR~~ NullPointerException: Cannot invoke "net.minecraft.entity.Entity.toString()" because "this.this$0.riddenByEntity" is null
+	Entity's Vehicle: ~~ERROR~~ NullPointerException: Cannot invoke "net.minecraft.entity.Entity.toString()" because "this.this$0.ridingEntity" is null
+Stacktrace:
+	at net.minecraft.world.World.updateEntities(World.java:1701)
+	at net.minecraft.world.WorldServer.updateEntities(WorldServer.java:540)
+
+-- Affected level --
+Details:
+	Level name: test world
+	All players: 0 total; []
+	Chunk stats: ServerChunkCache: 633 Drop: 0
+	Level seed: -8412402368410807895
+	Level generator: ID 01 - flat, ver 0. Features enabled: true
+	Level generator options: 
+	Level spawn location: -990.00,4.00,509.00 - World: (-990,4,509), Chunk: (at 2,0,13 in -62,31; contains blocks -992,0,496 to -977,255,511), Region: (-2,0; contains chunks -64,0 to -33,31, blocks -1024,0,0 to -513,255,511)
+	Level time: 13589 game time, 13589 day time
+	Level dimension: 0
+	Level storage version: 0x04ABD - Anvil
+	Level weather: Rain time: 148505 (now: false), thunder time: 125596 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: true
+Stacktrace:
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:781)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:691)
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:178)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:570)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.9
+	Operating System: Windows 10 (amd64) version 10.0
+	Java Version: 17.0.4.1, Eclipse Adoptium
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Eclipse Adoptium
+	Memory: 110426592 bytes (105 MB) / 245366784 bytes (234 MB) up to 4265607168 bytes (4068 MB)
+	JVM Flags: 1 total; -XX:+ShowCodeDetailsInExceptionMessages
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	Profiler Position: N/A (disabled)
+	Player Count: 0 / 8; []
+	Type: Integrated Server (map_client.txt)
+	Is Modded: Very likely; Jar signature invalidated

@@ -191,7 +191,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
      * Adds the buttons (and other controls) to the screen in question. Called when the GUI is displayed and when the
      * window resizes, the buttonList is cleared beforehand.
      */
-    public void initGui()
+    @SuppressWarnings("unused")
+	public void initGui()
     {
         this.viewportTexture = new DynamicTexture(256, 256);
         this.backgroundTexture = this.mc.getTextureManager().getDynamicTextureLocation("background", this.viewportTexture);
@@ -210,7 +211,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         {
             this.splashText = "OOoooOOOoooo! Spooky!";
         }
-
+        
         int i = 24;
         int j = this.height / 4 + 48;
 
@@ -218,15 +219,18 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         {
             this.addDemoButtons(j, 24);
         }
-        else
-        {
-            this.addSingleplayerMultiplayerButtons(j, 24);
-        }
-
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, j + 72 + 12, 98, 20, I18n.format("menu.options", new Object[0])));
+//    	this.addSingleplayerMultiplayerButtons(j, 24);
+//        Random rand = new Random();
+        if((new Random().nextInt(100)) == 54) {
+        this.addOopsAllINSERTButtons(j, "menu.quit", 4, 3);
+        this.splashText = "Oops! All quit!";
+        } else {
+//        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, j + 72 + 12, 98, 20, I18n.format("menu.quit", new Object[0])));
+        	this.addSingleplayerMultiplayerButtons(j, 24);
+        	this.buttonList.add(new GuiButton(0, this.width / 2 - 100, j + 72 + 12, 98, 20, I18n.format("menu.options", new Object[0])));
         this.buttonList.add(new GuiButton(4, this.width / 2 + 2, j + 72 + 12, 98, 20, I18n.format("menu.quit", new Object[0])));
-        this.buttonList.add(new GuiButtonLanguage(5, this.width / 2 - 124, j + 72 + 12));
-
+        this.buttonList.add(new GuiButtonLanguage(1, this.width / 2 - 124, j + 72 + 12));
+        }
         synchronized (this.threadLock)
         {
             this.field_92023_s = this.fontRendererObj.getStringWidth(this.openGLWarning1);
@@ -264,6 +268,14 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         this.buttonList.add(this.realmsButton = new GuiButton(14, this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 2, I18n.format("menu.online", new Object[0])));
     }
 
+    private void addOopsAllINSERTButtons(int yOffset, String oops, int id, int gridSize)
+    {
+    	for(int i = 0; i < 30; i++)
+    		for(int j = 0; j < 30; j++)
+    			this.buttonList.add(new GuiButton(id, this.width / gridSize - 100 +((98/gridSize+20)*j), (30*i+yOffset) + 12, 98/gridSize, 20, I18n.format(oops, new Object[0])));
+//    	this.buttonList.add(new GuiButton(id, this.width / 2 - 100, yOffset + 72 + 12, 98, 20, I18n.format(oops, new Object[0])));
+//        this.buttonList.add(new GuiButton(id, this.width / 2 + 2, yOffset + 72 + 12, 98, 20, I18n.format(oops, new Object[0])));
+    }
     /**
      * Adds Demo buttons on Main Menu for players who are playing Demo.
      */
@@ -382,7 +394,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         GlStateManager.matrixMode(5888);
         GlStateManager.pushMatrix();
         GlStateManager.loadIdentity();
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.color(0.0F, 0.0F, 0.0F, 0.0F);
         GlStateManager.rotate(180.0F, 1.0F, 0.0F, 0.0F);
         GlStateManager.rotate(90.0F, 0.0F, 0.0F, 1.0F);
         GlStateManager.enableBlend();
@@ -468,8 +480,10 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
         GL11.glCopyTexSubImage2D(GL11.GL_TEXTURE_2D, 0, 0, 0, 0, 0, 256, 256);
         GlStateManager.enableBlend();
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-        GlStateManager.colorMask(true, true, true, false);
+//        be a shame if someone were to disable the blend...
+        GlStateManager.disableBlend();
+//        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.colorMask(false, false, false, false);
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
@@ -565,7 +579,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         GlStateManager.scale(f, f, f);
         this.drawCenteredString(this.fontRendererObj, this.splashText, 0, -8, -256);
         GlStateManager.popMatrix();
-        String s = "Minecraft 1.8.9";
+        String s = "W.I.P. Project Alpha";
 
         if (this.mc.isDemo())
         {
@@ -573,7 +587,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         }
 
         this.drawString(this.fontRendererObj, s, 2, this.height - 10, -1);
-        String s1 = "Copyright Mojang AB. Do not distribute!";
+        String s1 = "guh I shouldn't be able to do this";
         this.drawString(this.fontRendererObj, s1, this.width - this.fontRendererObj.getStringWidth(s1) - 2, this.height - 10, -1);
 
         if (this.openGLWarning1 != null && this.openGLWarning1.length() > 0)

@@ -370,6 +370,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
 
                     if (this.playerEntity.onGround && !packetIn.isOnGround() && d12 > 0.0D)
                     {
+                    	
                         this.playerEntity.jump();
                     }
 

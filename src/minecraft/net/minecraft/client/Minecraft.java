@@ -2034,6 +2034,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                             if (this.gameSettings.thirdPersonView > 2)
                             {
                                 this.gameSettings.thirdPersonView = 0;
+                                this.mouseHelper.grabMouseCursor();
                             }
 
                             if (this.gameSettings.thirdPersonView == 0)
@@ -2043,6 +2044,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                             else if (this.gameSettings.thirdPersonView == 1)
                             {
                                 this.entityRenderer.loadEntityShader((Entity)null);
+                            } else {
+                            	this.mouseHelper.ungrabMouseCursor();
                             }
 
                             this.renderGlobal.setDisplayListEntitiesDirty();

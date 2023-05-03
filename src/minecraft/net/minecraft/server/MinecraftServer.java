@@ -773,7 +773,7 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
                 {
                     CrashReport crashreport = CrashReport.makeCrashReport(throwable1, "Exception ticking world");
                     worldserver.addWorldInfoToCrashReport(crashreport);
-                    throw new ReportedException(crashreport);
+//                    throw new ReportedException(crashreport);
                 }
 
                 try
@@ -784,7 +784,8 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
                 {
                     CrashReport crashreport1 = CrashReport.makeCrashReport(throwable, "Exception ticking world entities");
                     worldserver.addWorldInfoToCrashReport(crashreport1);
-                    throw new ReportedException(crashreport1);
+//                    do i give a shit? no
+//                    throw new ReportedException(crashreport1);
                 }
 
                 this.theProfiler.endSection();

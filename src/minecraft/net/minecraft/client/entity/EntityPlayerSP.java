@@ -898,8 +898,11 @@ public class EntityPlayerSP extends AbstractClientPlayer
         {
             this.horseJumpPower = 0.0F;
         }
-
-        super.onLivingUpdate();
+        
+        if(this.mc.gameSettings.thirdPersonView == 2)
+        	IfeltLikenotNamingThisProperly();
+        else
+        	super.onLivingUpdate();
 
         if (this.onGround && this.capabilities.isFlying && !this.mc.playerController.isSpectatorMode())
         {
